@@ -11,9 +11,6 @@ import { ApiFeatures } from "../../../utils/apiFeatures.js"
 
 export const productList = asyncHandler(async (req, res, next) => {
 
-
-
-
     const apiObject = new ApiFeatures(productModel.find().populate([
         {
             path: 'review',
@@ -31,11 +28,6 @@ export const productList = asyncHandler(async (req, res, next) => {
         products[i] = product
     }
     return res.status(200).json({ message: "Done", products })
-
-
-
-
-
 
 })
 export const createProduct = asyncHandler(async (req, res, next) => {

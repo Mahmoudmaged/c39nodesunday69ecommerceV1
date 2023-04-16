@@ -46,6 +46,9 @@ const initApp = (app, express) => {
     //convert Buffer Data
     app.use(cors())
    
+    app.get("/", (req,res,next)=>{
+        return res.status(200).json({message:"Welcome TO C39 sunday E-commerce App "})
+    })
     if (process.env.MOOD == "DEVs") {
         app.use(morgan('dev'))
     } else {

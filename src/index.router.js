@@ -35,7 +35,7 @@ const initApp = (app, express) => {
     //     //     return res.json({ message: "In-valid origin" })
     //     // }
     //     // await res.header('Access-Control-Allow-Origin', ['http://127.0.0.1:5500', 'http://localhost:4200/']);
-      
+
     //     await res.header('Access-Control-Allow-Origin', '*');
     //     await res.header('Access-Control-Allow-Headers', '*')
     //     await res.header("Access-Control-Allow-Private-Network", 'true')
@@ -45,16 +45,20 @@ const initApp = (app, express) => {
     // });
     //convert Buffer Data
     app.use(cors())
-   
-    app.get("/", (req,res,next)=>{
-        return res.status(200).json({message:"Welcome TO C39 sunday E-commerce App "})
-    })
+
     if (process.env.MOOD == "DEVs") {
         app.use(morgan('dev'))
     } else {
         app.use(morgan('common'))
     }
-    app.use(express.json({}))
+    app.use((req, res, next) => {
+        if (req.originalUrl == '/order/webhook') {
+            next()
+        } else {
+            express.json({})(req, res, next)
+
+        }
+    })
     //Setup API Routing 
     app.use(`/auth`, authRouter)
     app.use(`/user`, userRouter)

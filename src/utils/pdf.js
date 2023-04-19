@@ -1,9 +1,11 @@
 import fs from "fs";
 import PDFDocument from "pdfkit";
+import path from 'path'
+import { fileURLToPath } from 'url'
+const __dirname = path.join(fileURLToPath(import.meta.url))
 
-export async function  createInvoice(invoice, path) {
-    console.log("hello PDF");
-    console.log({ invoice });
+export async function createInvoice(invoice, path) {
+
     let doc = new PDFDocument({ size: "A4", margin: 50 });
 
     generateHeader(doc);
@@ -16,8 +18,10 @@ export async function  createInvoice(invoice, path) {
 }
 
 function generateHeader(doc) {
+    console.log(__dirname);
+    const logo = path.join(__dirname, 'logo.jpg')
     doc
-        .image("logo.jpg", 50, 45, { width: 50 })
+        // .image(logo, 50, 45, { width: 50 })
         .fillColor("#09c")
         .fontSize(25)
         .text("Route", 110, 57)
@@ -110,7 +114,7 @@ function generateInvoiceTable(doc, invoice) {
         "",
         "Subtotal",
         "",
-        formatCurrency(invoice.subtotal *100)
+        formatCurrency(invoice.subtotal * 100)
     );
 
     const paidToDatePosition = subtotalPosition + 20;
@@ -121,7 +125,7 @@ function generateInvoiceTable(doc, invoice) {
         "",
         "total",
         "",
-        formatCurrency(invoice.total *100)
+        formatCurrency(invoice.total * 100)
     );
 
     const duePosition = paidToDatePosition + 25;

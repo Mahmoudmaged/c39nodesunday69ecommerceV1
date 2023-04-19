@@ -9,7 +9,7 @@ import express from 'express'
 import initApp from './src/index.router.js';
 const app = express()
 // setup port and the baseUrl
-const port = process.env.PORT 
+const port = process.env.PORT || 5000;
 
 app.set('case sensitive routing', true);
 
